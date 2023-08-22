@@ -50,4 +50,4 @@ router.get('/me', middleware_1.authenticateJwt, (req, res) => __awaiter(void 0, 
         res.status(403).json({ message: 'User not logged in' });
     }
 }));
-module.exports = router;
+exports.default = router;
