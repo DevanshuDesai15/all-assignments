@@ -42,7 +42,8 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 }));
 router.get('/me', middleware_1.authenticateJwt, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield db_1.User.findOne({ _id: req.userId });
+    const userId = req.headers["userId"];
+    const user = yield db_1.User.findOne({ _id: userId });
     if (user) {
         res.json({ username: user.username });
     }

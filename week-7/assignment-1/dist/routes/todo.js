@@ -10,7 +10,7 @@ const router = express_1.default.Router();
 router.post('/todos', index_1.authenticateJwt, (req, res) => {
     const { title, description } = req.body;
     const done = false;
-    const userId = req.userId;
+    const userId = req.headers["userId"];
     const newTodo = new db_1.Todo({ title, description, done, userId });
     newTodo.save()
         .then((savedTodo) => {
@@ -21,7 +21,7 @@ router.post('/todos', index_1.authenticateJwt, (req, res) => {
     });
 });
 router.get('/todos', index_1.authenticateJwt, (req, res) => {
-    const userId = req.userId;
+    const userId = req.headers["userId"];
     db_1.Todo.find({ userId })
         .then((todos) => {
         res.json(todos);
@@ -32,7 +32,7 @@ router.get('/todos', index_1.authenticateJwt, (req, res) => {
 });
 router.patch('/todos/:todoId/done', index_1.authenticateJwt, (req, res) => {
     const { todoId } = req.params;
-    const userId = req.userId;
+    const userId = req.headers["userId"];
     db_1.Todo.findOneAndUpdate({ _id: todoId, userId }, { done: true }, { new: true })
         .then((updatedTodo) => {
         if (!updatedTodo) {
